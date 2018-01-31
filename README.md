@@ -13,5 +13,8 @@ $ perldoc t2s
 $ t2s toporobot_TEXT_file
 ```
 
+## References
 
+* [toporobot](http://www.geo.uzh.ch/~heller/toporobot/index.html)
+* [survex](https://survex.com/)
 
