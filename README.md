@@ -7,7 +7,11 @@ Convert Toporobot exported TEXT file into Survex file format (.svx)
 
 Requires Perl 5
 
-```bash
-$  t2s <toporobot TEXT file>
+```bash session
+$ perldoc t2s
+
+$ t2s toporobot_TEXT_file
 ```
+
+
 
