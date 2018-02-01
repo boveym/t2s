@@ -1,9 +1,10 @@
-# toporobot2survex
+# t2s
 
+Toporobot to Survex
+
+## perl script: t2s
 
 Convert Toporobot exported TEXT file into Survex file format (.svx)
-
-## Toporobot to Survex
 
 Requires Perl 5
 
