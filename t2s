@@ -37,7 +37,7 @@ use strict;
 use HTTP::Date;
 use File::Basename;
 
-my $MIN_SURVEX_VERSION = '1.2';
+my $MIN_SURVEX_VERSION = '1.4';
 
 my $tr_filename = shift;
 
@@ -395,7 +395,7 @@ sub print_trip {
     my ( $day, $month, $year ) = split /\//, $trip[$new_trip]->{date};
     $year = 1900 + $year if $year >= 33;
     $year = 2000 + $year if $year < 33;
-    print SVX '*date ', $year, '.', $month, '.', $day, "\n";
+    print SVX '*date ', $year, '-', $month, '-', $day, "\n";
     print SVX '*team "', $trip[$new_trip]->{speleometer},
       '" compass clino tape', "\n";
     print SVX '*team "', $trip[$new_trip]->{speleograph},
