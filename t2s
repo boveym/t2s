@@ -402,7 +402,7 @@ sub print_trip {
       '" notes pictures tape', "\n";
 # ----
 # problem while trying to write calibration into SVX, 
-# e.g. Z7 main passage with an orientation 100 degres wrong
+# e.g. Z7 main passage with an orientation 100 degrees wrong
 # commenting code out
 #    if ( $trip[$new_trip]->{declination_flag} ) {
 #        print SVX '*calibrate compass ',
@@ -451,7 +451,7 @@ sub print_code {
 
 # ----
 # problem while trying to write calibration into SVX, 
-# e.g. Z7 main passage with an orientation 100 degres wrong
+# e.g. Z7 main passage with an orientation 100 degrees wrong
 # commenting code out
 #    if ( $$ref_code{declination} != 0 ) {
 #        print SVX '*calibrate compass ', $$ref_code{declination}, "\n";
