@@ -76,6 +76,9 @@ print SVX '*require ', $MIN_SURVEX_VERSION, "\n";
 my ( $tr_ref, $tr_data, $tr_comment_flag );
 my ( $tr_serie, $tr_station, $tr_code, $tr_session, $tr_trip );
 
+# assume End Of Line for Macintosh <carriage return>
+local $/ = "\x0d";
+
 while (<SRC>) {
     chomp;
 ##    next if length $_ < 26;    # avoid entry with no data (eg -3)
