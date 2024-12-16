@@ -65,13 +65,13 @@ open( SVX, ">$svx_filename" )
   || die "Can't open file <$svx_filename> to write survex data into";
 print "creating ", $svx_filename, "\n";
 
-my $basename = basename($svx_filename, '.svx');
+my $basename = basename( $svx_filename, '.svx' );
 
 print SVX '; Generated on ', time2str, ' by ', __FILE__, "\n";
 
 print SVX '; From Toporobot exported file: ', $tr_filename,        "\n\n";
-print SVX '*begin ', $basename, "\n";
-print SVX '*require ', $MIN_SURVEX_VERSION, "\n";
+print SVX '*begin ',                          $basename,           "\n";
+print SVX '*require ',                        $MIN_SURVEX_VERSION, "\n";
 
 my ( $tr_ref, $tr_data, $tr_comment_flag );
 my ( $tr_serie, $tr_station, $tr_code, $tr_session, $tr_trip );
@@ -82,15 +82,15 @@ local $/ = "\x0d";
 while (<SRC>) {
     chomp;
 ##    next if length $_ < 26;    # avoid entry with no data (eg -3)
-    $tr_ref = substr( $_, 0, 24 );
+    $tr_ref  = substr( $_, 0, 24 );
     $tr_data = substr( $_, 25 );
-    $tr_data =~ s/^\s+//;      # remove leading spaces
-    $tr_data =~ s/\s+$//;      # remove trailing spaces
+    $tr_data =~ s/^\s+//;    # remove leading spaces
+    $tr_data =~ s/\s+$//;    # remove trailing spaces
     $tr_comment_flag = $tr_ref =~ /^\(/;
 
     #? print STDERR $_, "\n" if $tr_comment_flag;
-    $tr_ref =~ s/^\(//;        # remove leading parenthesis
-    $tr_ref =~ s/^\s+//;       # remove leading spaces
+    $tr_ref =~ s/^\(//;      # remove leading parenthesis
+    $tr_ref =~ s/^\s+//;     # remove leading spaces
 
     #? print STDERR $tr_ref, "\n";
     ( $tr_serie, $tr_station, $tr_code, $tr_session, $tr_trip ) = split /\s+/,
@@ -124,7 +124,7 @@ while (<SRC>) {
         parse_cavename( $tr_data, $tr_comment_flag );
     }
     else {
-    #?   print STDERR 'unknown serie ', $tr_serie, "\n";
+        #?   print STDERR 'unknown serie ', $tr_serie, "\n";
         next;
     }
 }
@@ -152,11 +152,14 @@ print_code( $code{$default_code}, $code{$default_code}, \$code_level );
 #? print STDERR 'default code is ', $default_code, "\n";
 
 foreach $current_serie_number ( 1 .. $#serie ) {
+
     #? print STDERR 'number : ', $current_serie_number;
-    if (defined $serie[$current_serie_number]->{number}) {
+    if ( defined $serie[$current_serie_number]->{number} ) {
+
         #? print STDERR ' FOUND';
         print_serie_data($current_serie_number);
     }
+
     #? print STDERR "\n";
 }
 
@@ -166,7 +169,8 @@ close SVX;
 
 sub parse_serie_name {
     my ( $tr_serie, $tr_station, $tr_code, $tr_trip, $tr_data,
-        $tr_comment_flag ) = @_;
+        $tr_comment_flag )
+      = @_;
     unless ($tr_comment_flag) {
         print STDERR 'New serie : ', $tr_serie, "\n";
         $serie[$tr_serie]->{number} = $tr_serie;
@@ -186,7 +190,8 @@ sub parse_serie_name {
 
 sub parse_serie_data {
     my ( $tr_serie, $tr_station, $tr_code, $tr_trip, $tr_data,
-        $tr_comment_flag ) = @_;
+        $tr_comment_flag )
+      = @_;
     unless ($tr_comment_flag) {
         (
             $serie[$tr_serie]->{start_serie},
@@ -244,7 +249,8 @@ sub parse_trip {
 
 sub parse_station {
     my ( $tr_serie, $tr_station, $tr_code, $tr_trip, $tr_data,
-        $tr_comment_flag ) = @_;
+        $tr_comment_flag )
+      = @_;
     unless ($tr_comment_flag) {
         my $station_id      = $tr_station;
         my $last_station_id = $last_station_number;
@@ -323,9 +329,9 @@ sub print_serie_data {
 
     print_equates($ser);
 
-    print SVX "\n", '*begin ', $ser, "\n";
-    print SVX '*title "', $serie[$ser]->{name}, '"', "\n";
-    print SVX '; ', $serie[$ser]->{comment}, "\n"
+    print SVX "\n",       '*begin ', $ser, "\n";
+    print SVX '*title "', $serie[$ser]->{name},    '"', "\n";
+    print SVX '; ',       $serie[$ser]->{comment}, "\n"
       if defined $serie[$ser]->{comment};
 
     print_export($ser);
@@ -400,16 +406,17 @@ sub print_trip {
       '" compass clino tape', "\n";
     print SVX '*team "', $trip[$new_trip]->{speleograph},
       '" notes pictures tape', "\n";
-# ----
-# problem while trying to write calibration into SVX, 
-# e.g. Z7 main passage with an orientation 100 degrees wrong
-# commenting code out
-#    if ( $trip[$new_trip]->{declination_flag} ) {
-#        print SVX '*calibrate compass ',
-#          $trip[$new_trip]->{declination_value},
-#          "\n";
-#    }
-# ----
+
+    # ----
+    # problem while trying to write calibration into SVX,
+    # e.g. Z7 main passage with an orientation 100 degrees wrong
+    # commenting code out
+    #    if ( $trip[$new_trip]->{declination_flag} ) {
+    #        print SVX '*calibrate compass ',
+    #          $trip[$new_trip]->{declination_value},
+    #          "\n";
+    #    }
+    # ----
 
 #  print SVX '; toporobot declination flag: ', $trip[$new_trip]->{declination_flag}, "\n";
 #  print SVX '; toporobot declination value: ', $trip[$new_trip]->{declination_value}, "\n";
@@ -449,14 +456,14 @@ sub print_code {
     elsif ( $$ref_code{clino_unit} == 399 ) { $value = 'grads-nadiral' }
     print SVX '*units clino ', $value, "\n";
 
-# ----
-# problem while trying to write calibration into SVX, 
-# e.g. Z7 main passage with an orientation 100 degrees wrong
-# commenting code out
-#    if ( $$ref_code{declination} != 0 ) {
-#        print SVX '*calibrate compass ', $$ref_code{declination}, "\n";
-#    }
-# ----
+    # ----
+    # problem while trying to write calibration into SVX,
+    # e.g. Z7 main passage with an orientation 100 degrees wrong
+    # commenting code out
+    #    if ( $$ref_code{declination} != 0 ) {
+    #        print SVX '*calibrate compass ', $$ref_code{declination}, "\n";
+    #    }
+    # ----
 
     if ( $$ref_code{limit_angle} < 0 ) {
         print SVX '*flags';
