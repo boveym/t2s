@@ -27,7 +27,7 @@ This buffer will use CR-only line endings when written
 
 ## References
 
-* [toporobot](http://www.geo.uzh.ch/~heller/toporobot/index.html)
+* [toporobot](http://www.geo.uzh.ch/~heller/toporobot/index.html) no more online
 * [survex](https://survex.com/)
 * [basilisk II](https://basilisk.cebix.net/)
 
