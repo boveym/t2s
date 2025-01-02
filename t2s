@@ -81,9 +81,12 @@ local $/ = "\x0d";
 
 while (<SRC>) {
     chomp;
-##    next if length $_ < 26;    # avoid entry with no data (eg -3)
     $tr_ref  = substr( $_, 0, 24 );
-    $tr_data = substr( $_, 25 );
+    if (length $_ > 24) {
+        $tr_data = substr( $_, 25 )
+    } else {
+        $tr_data = ' '
+    }
     $tr_data =~ s/^\s+//;    # remove leading spaces
     $tr_data =~ s/\s+$//;    # remove trailing spaces
     $tr_comment_flag = $tr_ref =~ /^\(/;
@@ -303,7 +306,11 @@ sub parse_cavename {
     my ( $data, $tr_comment_flag ) = @_;
     unless ($tr_comment_flag) {
         $data =~ s/"//g;
-        $cave{name} = $data;
+        if (length $data > 0) {
+            $cave{name} = $data;
+        } else {
+            $cave{name} = $basename;
+        }
     }
     else {
         $cave{name_comment} .= $data;
