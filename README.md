@@ -25,6 +25,12 @@ This buffer will use CR-only line endings when written
 :setlocal ff=mac
 ```
 
+## Convert to UTF-8
+
+```sh
+iconv -f macintosh -t UTF-8 < MAC_TEXT_FILE > OUTPUT_FILE
+```
+
 ## References
 
 * [toporobot](http://www.geo.uzh.ch/~heller/toporobot/index.html) no more online
